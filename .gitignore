@@ -1,24 +1,22 @@
-# Ignore virtual environments
+﻿# Virtual environments
 .venv/
 venv/
 env/
 ENV/
 
-# Python artifacts
+# Python cache
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
-# macOS and Windows
+# macOS and Windows system files
 .DS_Store
 Thumbs.db
 
-# VSCode and IDEs
+# IDE config
 .vscode/
 .idea/
 
-# Archive or backup folders
+# Backup or archive folders
 workspace/_archive/
-
-# Any other heavy folders you don’t need to push
