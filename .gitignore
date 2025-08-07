@@ -1,6 +1,5 @@
-﻿# Virtual environments
+﻿# Python virtual envs
 .venv/
-venv/
 env/
 ENV/
 
@@ -10,7 +9,7 @@ __pycache__/
 *.pyo
 *.pyd
 
-# macOS and Windows system files
+# System files
 .DS_Store
 Thumbs.db
 
@@ -18,5 +17,8 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Backup or archive folders
+# Backups
 workspace/_archive/
+
+# VS Code dev containers or auto-generated stuff
+.devcontainer/
