@@ -1,0 +1,21 @@
+
+sequenceDiagram
+    participant P as Program
+    participant TM as TaskManager
+    participant CR as CodeReview
+    participant NS as NotificationSystem
+    participant T as Task
+    participant C as Code
+    participant U as User
+    P->>TM: CreateTask(T)
+    TM-->>P: return void
+    P->>TM: AssignTask(T, U)
+    TM-->>P: return void
+    P->>TM: TrackTask(T)
+    TM-->>P: return TaskStatus
+    P->>CR: SubmitCode(C, U)
+    CR-->>P: return void
+    P->>CR: ReviewCode(C, U)
+    CR-->>P: return void
+    P->>NS: SendNotification(U, 'message')
+    NS-->>P: return void

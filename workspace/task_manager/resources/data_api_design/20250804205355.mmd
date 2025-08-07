@@ -1,0 +1,37 @@
+
+classDiagram
+    class Program {
+        -TaskManager taskManager
+        -CodeReview codeReview
+        -NotificationSystem notificationSystem
+        +Main() void
+    }
+    class TaskManager {
+        -List<Task> tasks
+        +CreateTask(task: Task) void
+        +AssignTask(task: Task, user: User) void
+        +TrackTask(task: Task) TaskStatus
+    }
+    class CodeReview {
+        -List<Code> codes
+        +SubmitCode(code: Code, user: User) void
+        +ReviewCode(code: Code, user: User) void
+    }
+    class NotificationSystem {
+        +SendNotification(user: User, message: string) void
+    }
+    class Task {
+        -string title
+        -User assignee
+        -DateTime deadline
+    }
+    class Code {
+        -string content
+        -User submitter
+    }
+    class User {
+        -string name
+    }
+    Program --> TaskManager
+    Program --> CodeReview
+    Program --> NotificationSystem

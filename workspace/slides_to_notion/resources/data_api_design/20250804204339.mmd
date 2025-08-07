@@ -1,0 +1,30 @@
+
+classDiagram
+    class Main {
+        -GoogleSlidesParser google_slides_parser
+        -NotionConverter notion_converter
+        -BatchConverter batch_converter
+        +main() str
+    }
+    class GoogleSlidesParser {
+        -gspread gspread
+        +parse_slides(slide_id: str) dict
+    }
+    class NotionConverter {
+        -notion notion
+        +convert_to_notion(parsed_content: dict) str
+    }
+    class BatchConverter {
+        -GoogleSlidesParser google_slides_parser
+        -NotionConverter notion_converter
+        +batch_convert(slide_ids: list) list
+    }
+    class WebInterface {
+        -Flask flask
+        +run_interface() None
+    }
+    Main --> GoogleSlidesParser
+    Main --> NotionConverter
+    Main --> BatchConverter
+    BatchConverter --> GoogleSlidesParser
+    BatchConverter --> NotionConverter

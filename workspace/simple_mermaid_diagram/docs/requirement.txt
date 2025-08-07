@@ -1,0 +1,2 @@
+Draw a simple Mermaid diagram showing A --> B
+Make it as short as possible.

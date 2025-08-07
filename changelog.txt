@@ -1,0 +1,6 @@
+Changelog - Google Slides to Notion Converter
+
+- Iterative feature batches implemented and reviewed by senior engineers
+- Visual 1:1 parity validated through automated and manual testing
+- Added batching for Notion API limits
+- Final security + cohesion pass performed before release

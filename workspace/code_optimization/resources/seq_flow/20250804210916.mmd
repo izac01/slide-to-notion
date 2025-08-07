@@ -1,0 +1,12 @@
+
+sequenceDiagram
+    participant M as Main
+    participant CO as CodeOptimizer
+    participant CH as CodeHardener
+    participant NM as NotificationManager
+    M->>CO: optimize_code(code)
+    CO-->>M: return optimized_code
+    M->>CH: harden_code(optimized_code)
+    CH-->>M: return hardened_code
+    M->>NM: notify_user('Code is ready for testing')
+    NM-->>M: return notification_status

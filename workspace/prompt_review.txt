@@ -1,0 +1,22 @@
+﻿You are tasked with reviewing the Google Slides → Notion converter project.
+
+Requirements:
+- Ensure folder structure is clean and optimal
+- Code architecture is modular, robust, and maintainable
+- Primary goal: Perfect 1:1 Google Slides → Notion visual conversion
+- Limit costly API calls; prefer caching/dry-run where possible
+- Provide 2+ automated tests using the sample deck:
+  https://docs.google.com/presentation/d/1BftmE4rYIMuyDDpFY3DYCMQ2G5Nm_BIY7JkoeYds6bI/edit?usp=sharing
+- Minimal documentation per file explaining how and why it matters
+- Detailed step-by-step usage guide
+- QA for visual fidelity: when to allow deviations
+- Before and after example of a conversion
+- Validate wizard workflow if implemented
+- Optional lightweight GUI
+- Keep portability in mind for professional code reviews
+
+Deliverable:
+- Suggested file structure and improvements
+- Code updates across all files if needed
+- Tests and documentation
+- Final verdict from an "Engineering Director" perspective

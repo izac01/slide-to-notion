@@ -1,0 +1,209 @@
+[2025-08-03 23:38:20] 🚀 Eng loop started.
+[2025-08-03 23:38:20] 📋 Using changelog: Changelog - Google Slides to Notion Converter
+
+- Iterative feature batches imple...
+[2025-08-03 23:38:20] ⚠️ Error on attempt 1: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+[2025-08-03 23:38:30] ⚠️ Error on attempt 2: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+[2025-08-03 23:38:50] ⚠️ Error on attempt 3: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+[2025-08-03 23:39:25] 🚀 Eng loop started.
+[2025-08-03 23:39:25] 📋 Using changelog: Changelog - Google Slides to Notion Converter
+
+- Iterative feature batches imple...
+[2025-08-03 23:39:26] ⚠️ Error on attempt 1: The model `gpt-4` does not exist or you do not have access to it.
+[2025-08-03 23:39:36] ⚠️ Error on attempt 2: The model `gpt-4` does not exist or you do not have access to it.
+[2025-08-03 23:39:56] ⚠️ Error on attempt 3: The model `gpt-4` does not exist or you do not have access to it.
+[Sun Aug  3 23:54:28 2025] ERROR in iteration 1: Traceback (most recent call last):
+  File "C:\Users\iZac\Documents\slide-to-notion\eng_loop.py", line 18, in request_code_update
+    resp = openai.ChatCompletion.create(
+        model=model,
+    ...<4 lines>...
+        temperature=0.2
+    )
+  File "C:\Users\iZac\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\api_resources\chat_completion.py", line 25, in create
+    return super().create(*args, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\iZac\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\api_resources\abstract\engine_api_resource.py", line 153, in create
+    response, _, api_key = requestor.request(
+                           ~~~~~~~~~~~~~~~~~^
+        "post",
+        ^^^^^^^
+    ...<5 lines>...
+        request_timeout=request_timeout,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\iZac\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\api_requestor.py", line 298, in request
+    resp, got_stream = self._interpret_response(result, stream)
+                       ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\iZac\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\api_requestor.py", line 700, in _interpret_response
+    self._interpret_response_line(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        result.content.decode("utf-8"),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        stream=False,
+        ^^^^^^^^^^^^^
+    ),
+    ^
+  File "C:\Users\iZac\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\api_requestor.py", line 765, in _interpret_response_line
+    raise self.handle_error_response(
+        rbody, rcode, resp.data, rheaders, stream_error=stream_error
+    )
+openai.error.RateLimitError: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\iZac\Documents\slide-to-notion\eng_loop.py", line 44, in run_loop
+    updated_code = request_code_update(changelog)
+  File "C:\Users\iZac\Documents\slide-to-notion\eng_loop.py", line 31, in request_code_update
+    return request_code_update(changelog, model=FALLBACK_MODEL)
+  File "C:\Users\iZac\Documents\slide-to-notion\eng_loop.py", line 18, in request_code_update
+    resp = openai.ChatCompletion.create(
+        model=model,
+    ...<4 lines>...
+        temperature=0.2
+    )
+  File "C:\Users\iZac\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\api_resources\chat_completion.py", line 25, in create
+    return super().create(*args, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\iZac\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\api_resources\abstract\engine_api_resource.py", line 153, in create
+    response, _, api_key = requestor.request(
+                           ~~~~~~~~~~~~~~~~~^
+        "post",
+        ^^^^^^^
+    ...<5 lines>...
+        request_timeout=request_timeout,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\iZac\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\api_requestor.py", line 298, in request
+    resp, got_stream = self._interpret_response(result, stream)
+                       ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\iZac\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\api_requestor.py", line 700, in _interpret_response
+    self._interpret_response_line(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        result.content.decode("utf-8"),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        stream=False,
+        ^^^^^^^^^^^^^
+    ),
+    ^
+  File "C:\Users\iZac\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\api_requestor.py", line 765, in _interpret_response_line
+    raise self.handle_error_response(
+        rbody, rcode, resp.data, rheaders, stream_error=stream_error
+    )
+openai.error.RateLimitError: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.
+
+[Sun Aug  3 23:59:30 2025] ERROR in iteration 2: Traceback (most recent call last):
+  File "C:\Users\iZac\Documents\slide-to-notion\eng_loop.py", line 18, in request_code_update
+    resp = openai.ChatCompletion.create(
+        model=model,
+    ...<4 lines>...
+        temperature=0.2
+    )
+  File "C:\Users\iZac\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\api_resources\chat_completion.py", line 25, in create
+    return super().create(*args, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\iZac\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\api_resources\abstract\engine_api_resource.py", line 153, in create
+    response, _, api_key = requestor.request(
+                           ~~~~~~~~~~~~~~~~~^
+        "post",
+        ^^^^^^^
+    ...<5 lines>...
+        request_timeout=request_timeout,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\iZac\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\api_requestor.py", line 298, in request
+    resp, got_stream = self._interpret_response(result, stream)
+                       ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\iZac\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\api_requestor.py", line 700, in _interpret_response
+    self._interpret_response_line(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        result.content.decode("utf-8"),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        stream=False,
+        ^^^^^^^^^^^^^
+    ),
+    ^
+  File "C:\Users\iZac\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\api_requestor.py", line 765, in _interpret_response_line
+    raise self.handle_error_response(
+        rbody, rcode, resp.data, rheaders, stream_error=stream_error
+    )
+openai.error.RateLimitError: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\iZac\Documents\slide-to-notion\eng_loop.py", line 44, in run_loop
+    updated_code = request_code_update(changelog)
+  File "C:\Users\iZac\Documents\slide-to-notion\eng_loop.py", line 31, in request_code_update
+    return request_code_update(changelog, model=FALLBACK_MODEL)
+  File "C:\Users\iZac\Documents\slide-to-notion\eng_loop.py", line 18, in request_code_update
+    resp = openai.ChatCompletion.create(
+        model=model,
+    ...<4 lines>...
+        temperature=0.2
+    )
+  File "C:\Users\iZac\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\api_resources\chat_completion.py", line 25, in create
+    return super().create(*args, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\iZac\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\api_resources\abstract\engine_api_resource.py", line 153, in create
+    response, _, api_key = requestor.request(
+                           ~~~~~~~~~~~~~~~~~^
+        "post",
+        ^^^^^^^
+    ...<5 lines>...
+        request_timeout=request_timeout,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\iZac\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\api_requestor.py", line 298, in request
+    resp, got_stream = self._interpret_response(result, stream)
+                       ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\iZac\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\api_requestor.py", line 700, in _interpret_response
+    self._interpret_response_line(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        result.content.decode("utf-8"),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        stream=False,
+        ^^^^^^^^^^^^^
+    ),
+    ^
+  File "C:\Users\iZac\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\api_requestor.py", line 765, in _interpret_response_line
+    raise self.handle_error_response(
+        rbody, rcode, resp.data, rheaders, stream_error=stream_error
+    )
+openai.error.RateLimitError: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.
+

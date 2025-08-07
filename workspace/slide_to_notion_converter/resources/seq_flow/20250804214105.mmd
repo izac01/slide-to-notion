@@ -1,0 +1,16 @@
+
+sequenceDiagram
+    participant M as Main
+    participant C as Converter
+    participant FM as FileManager
+    participant EM as EnvironmentManager
+    participant UI as UI
+    M->>C: convert(slide_path, notion_path)
+    C->>EM: setup_environment()
+    C->>FM: read_file(slide_path)
+    FM-->>C: return slide_data
+    C->>C: convert slide_data to notion_data
+    C->>FM: write_file(notion_path, notion_data)
+    C->>EM: cleanup_environment()
+    C-->>M: return 'Conversion successful'
+    M->>UI: display_progress(1.0)

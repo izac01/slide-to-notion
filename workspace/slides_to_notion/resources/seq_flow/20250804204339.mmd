@@ -1,0 +1,15 @@
+
+sequenceDiagram
+    participant M as Main
+    participant GSP as GoogleSlidesParser
+    participant NC as NotionConverter
+    participant BC as BatchConverter
+    participant WI as WebInterface
+    M->>GSP: parse_slides(slide_id)
+    GSP-->>M: return parsed_content
+    M->>NC: convert_to_notion(parsed_content)
+    NC-->>M: return notion_page_id
+    M->>BC: batch_convert(slide_ids)
+    BC-->>M: return notion_page_ids
+    M->>WI: run_interface()
+    WI-->>M: return None

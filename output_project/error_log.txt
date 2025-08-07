@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "C:\Users\iZac\Documents\slide-to-notion\run_metagpt.py", line 47, in <module>
+    startup(idea=idea, investment=investment, n_round=n_round)
+  File "C:\Users\iZac\Documents\slide-to-notion\metagpt_env\Lib\site-packages\metagpt\software_company.py", line 101, in startup
+    copy_config_to()
+  File "C:\Users\iZac\Documents\slide-to-notion\metagpt_env\Lib\site-packages\metagpt\software_company.py", line 144, in copy_config_to
+    target_path.rename(backup_path)
+  File "C:\Users\iZac\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1175, in rename
+    os.rename(self, target)
+FileExistsError: [WinError 183] Cannot create a file when that file already exists: 'C:\\Users\\iZac\\.metagpt\\config2.yaml' -> 'C:\\Users\\iZac\\.metagpt\\config2.bak'

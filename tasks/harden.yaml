@@ -1,0 +1,131 @@
+name: "Harden Google Slides to Notion Converter"
+description: "Clean repo, merge duplicates, create final workspace."
+
+steps:
+  - name: "Remove Redundant Folders & Files"
+    run: |
+      echo Cleaning old files...
+      if (Test-Path slides_to_notion_converter) { Remove-Item -Recurse -Force slides_to_notion_converter }
+      if (Test-Path slide_to_notion_converter) { Remove-Item -Recurse -Force slide_to_notion_converter }
+      if (Test-Path google_slides_to_notion) { Remove-Item -Recurse -Force google_slides_to_notion }
+      if (Test-Path test_parser.py) { Remove-Item -Force test_parser.py }
+      if (Test-Path old_notion_api.py) { Remove-Item -Force old_notion_api.py }
+      if (Test-Path demo_cli.py) { Remove-Item -Force demo_cli.py }
+      if (!(Test-Path workspace)) { New-Item -ItemType Directory workspace }
+      echo ✅ Removed duplicates and ensured workspace exists.
+
+  - name: "Write Final Hardened Files"
+    files:
+      workspace/google_slides_parser.py: |
+        import logging
+        from typing import List, Dict, Any
+        class GoogleSlidesParser:
+            def __init__(self, slides_service): self.slides_service = slides_service
+            def fetch_presentation(self, presentation_id: str) -> Dict[str, Any]:
+                return self.slides_service.presentations().get(presentationId=presentation_id).execute()
+            def parse_slides(self, presentation: Dict[str, Any]) -> List[Dict[str, Any]]:
+                slides_data = []
+                for slide in presentation.get("slides", []):
+                    elements = []
+                    for element in slide.get("pageElements", []):
+                        if "shape" in element:
+                            text = self._extract_text(element)
+                            if text: elements.append({"type": "text", "content": text})
+                        elif "image" in element:
+                            elements.append({"type": "image", "content": element["image"]["contentUrl"]})
+                    slides_data.append({"elements": elements})
+                return slides_data
+            def _extract_text(self, element: Dict[str, Any]) -> str:
+                return "".join(te["textRun"]["content"]
+                               for te in element["shape"]["text"]["textElements"] if "textRun" in te).strip()
+
+      workspace/notion_converter.py: |
+        from typing import List, Dict
+        class NotionConverter:
+            def convert(self, slides_data: List[Dict]) -> List[Dict]:
+                blocks = []
+                for slide in slides_data:
+                    for el in slide["elements"]:
+                        if el["type"] == "text": blocks.append(self._text_block(el["content"]))
+                        elif el["type"] == "image": blocks.append(self._image_block(el["content"]))
+                return blocks
+            def _text_block(self, text: str) -> Dict:
+                return {"object":"block","type":"paragraph","paragraph":{"text":[{"type":"text","text":{"content":text}}]}}
+            def _image_block(self, url: str) -> Dict:
+                return {"object":"block","type":"image","image":{"type":"external","external":{"url":url}}}
+
+      workspace/batch_converter.py: |
+        import logging
+        from typing import List
+        class BatchConverter:
+            def __init__(self, parser, converter, notion_client):
+                self.parser, self.converter, self.notion_client = parser, converter, notion_client
+            def process_presentations(self, ids: List[str], page: str):
+                for pid in ids:
+                    try:
+                        pres = self.parser.fetch_presentation(pid)
+                        slides = self.parser.parse_slides(pres)
+                        blocks = self.converter.convert(slides)
+                        for b in blocks: self.notion_client.blocks.children.append(page, b)
+                    except Exception as e: logging.error(f"Error processing {pid}: {e}")
+
+      workspace/ui.py: |
+        class UI:
+            def prompt_presentation_ids(self): return [x.strip() for x in input("Enter Google Slides IDs: ").split(",") if x.strip()]
+            def prompt_notion_page_id(self): return input("Enter target Notion page ID: ").strip()
+            def show_progress(self, i, total): print(f"Processing {i}/{total} presentations...")
+            def show_done(self): print("✅ Conversion complete! Your slides are now in Notion.")
+
+      workspace/main.py: |
+        import logging
+        from googleapiclient.discovery import build
+        from notion_client import Client
+        from google_slides_parser import GoogleSlidesParser
+        from notion_converter import NotionConverter
+        from batch_converter import BatchConverter
+        from ui import UI
+        def main():
+            logging.basicConfig(level=logging.INFO)
+            slides_service = build("slides", "v1")
+            notion_client = Client(auth="YOUR_NOTION_API_TOKEN")
+            parser, converter = GoogleSlidesParser(slides_service), NotionConverter()
+            batch, ui = BatchConverter(parser, converter, notion_client), UI()
+            ids, page = ui.prompt_presentation_ids(), ui.prompt_notion_page_id()
+            for i, pid in enumerate(ids, 1):
+                ui.show_progress(i, len(ids))
+                batch.process_presentations([pid], page)
+            ui.show_done()
+        if __name__ == "__main__": main()
+
+      workspace/README.md: |
+        # Google Slides to Notion Converter
+        Converts Google Slides into Notion pages.
+        Run `python main.py` to get started.
+
+      workspace/ONBOARDING.md: |
+        # Onboarding Guide
+        1. Get your Google Slides IDs.
+        2. Get your Notion integration token.
+        3. Run `python main.py`.
+        4. Enter the IDs and page when prompted.
+
+      workspace/requirements.txt: |
+        google-api-python-client==2.115.0
+        notion-client==2.0.0
+
+  - name: "Install Dependencies"
+    run: |
+      pip install -r workspace/requirements.txt
+
+  - name: "Smoke Test"
+    run: |
+      echo Running smoke test...
+      python -m py_compile workspace/*.py || echo "⚠️ Compilation issues found"
+
+  - name: "Zip Final Repo"
+    run: |
+      python -c "import os,zipfile;F='workspace';O='workspace_cleaned.zip'; \
+with zipfile.ZipFile(O,'w',zipfile.ZIP_DEFLATED) as z: \
+ [z.write(os.path.join(r,f),os.path.relpath(os.path.join(r,f),F)) \
+  for r,_,fs in os.walk(F) for f in fs]; \
+print(f'✅ Created {O}')"

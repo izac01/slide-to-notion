@@ -1,0 +1,20 @@
+
+classDiagram
+    class Main {
+        -CodeOptimizer code_optimizer
+        -CodeHardener code_hardener
+        -NotificationManager notification_manager
+        +main() str
+    }
+    class CodeOptimizer {
+        +optimize_code(code: str) str
+    }
+    class CodeHardener {
+        +harden_code(code: str) str
+    }
+    class NotificationManager {
+        +notify_user(message: str)
+    }
+    Main --> CodeOptimizer
+    Main --> CodeHardener
+    Main --> NotificationManager

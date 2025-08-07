@@ -1,0 +1,28 @@
+
+classDiagram
+    class Main {
+        -Converter converter
+        -UI ui
+        +main() str
+    }
+    class Converter {
+        -FileManager file_manager
+        -EnvironmentManager environment_manager
+        +convert(slide_path: str, notion_path: str) str
+    }
+    class FileManager {
+        +read_file(file_path: str) dict
+        +write_file(file_path: str, data: dict)
+    }
+    class EnvironmentManager {
+        +setup_environment()
+        +cleanup_environment()
+    }
+    class UI {
+        +display_progress(progress: float)
+        +display_error(message: str)
+    }
+    Main --> Converter
+    Main --> UI
+    Converter --> FileManager
+    Converter --> EnvironmentManager
