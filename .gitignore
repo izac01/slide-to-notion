@@ -32,3 +32,59 @@ workspace/**
 !workspace/drive_uploader.py
 !workspace/google_slides_to_notion
 !workspace/game_2048/.gitkeep
+# --- local env / secrets / caches ---
+.env
+.env.*
+env/
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# build/output
+dist/
+build/
+*.egg-info/
+
+# misc project-specific
+metagpt_task.yaml
+workspace/game_2048/
+textgen/
+text-generation-webui/
+# --- local env / secrets / caches ---
+.env
+.env.*
+env/
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# build/output
+dist/
+build/
+*.egg-info/
+
+# misc project-specific
+metagpt_task.yaml
+workspace/game_2048/
+textgen/
+text-generation-webui/
