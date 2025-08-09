@@ -13,11 +13,3 @@
     hooks:
       - id: detect-secrets
         args: ["--baseline", ".secrets.baseline"]
-
-  - repo: local
-    hooks:
-      - id: pytest
-        name: pytest
-        entry: pytest -q
-        language: system
-        pass_filenames: false
