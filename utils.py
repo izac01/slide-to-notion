@@ -1,5 +1,9 @@
-import hashlib, json
-from typing import Any
+# --- MVP helpers ---
+from pathlib import Path
+import hashlib
 
-def calculate_hash(data: Any) -> str:
-    return hashlib.sha256(json.dumps(data, sort_keys=True, default=str).encode("utf-8")).hexdigest()
+def sha256_bytes(b: bytes) -> str:
+    return hashlib.sha256(b).hexdigest()
+
+def ensure_dir(path: str) -> None:
+    Path(path).mkdir(parents=True, exist_ok=True)
