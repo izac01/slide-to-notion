@@ -88,3 +88,34 @@ metagpt_task.yaml
 workspace/game_2048/
 textgen/
 text-generation-webui/
+# Secrets / env / local
+.env
+.env.*
+env/
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# IDE / OS junk
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Project-specific junk
+metagpt_task.yaml
+workspace/logs/
+workspace/**/docs/*.json
+workspace/**/service_account.json
+textgen/
+text-generation-webui/
+workspace/game_2048/
