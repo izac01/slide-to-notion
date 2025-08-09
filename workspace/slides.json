@@ -1,0 +1,17 @@
+{
+  "slides": [
+    {
+      "title": "DEMO SLIDE",
+      "elements": [
+        {
+          "type": "text",
+          "content": "✅ This is a demo slide with a valid image"
+        },
+        {
+          "type": "image",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg"
+        }
+      ]
+    }
+  ]
+}

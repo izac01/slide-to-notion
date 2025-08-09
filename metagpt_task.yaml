@@ -1,0 +1,69 @@
+# metagpt_task.yaml
+
+name: "Harden Google Slides to Notion Converter"
+description: >
+  Merge duplicate modules, harden architecture, and clean repo
+  based on the provided Cleanup Report and diffs.
+
+steps:
+  - name: "Load Cleanup Report"
+    run: |
+      echo "Reading Cleanup Report..."
+      cat Cleanup_Report.md || echo "Cleanup report assumed from notes"
+
+  - name: "Remove Redundant Folders & Files"
+    run: |
+      rm -rf slides_to_notion_converter slide_to_notion_converter google_slides_to_notion
+      rm -f test_parser.py old_notion_api.py demo_cli.py
+      echo "Removed duplicates and obsolete files."
+
+  - name: "Ensure Workspace Exists"
+    run: |
+      mkdir -p workspace
+
+  - name: "Write Hardened Source Files"
+    files:
+      workspace/google_slides_parser.py: |
+        {{google_slides_parser_code}}
+      workspace/notion_converter.py: |
+        {{notion_converter_code}}
+      workspace/batch_converter.py: |
+        {{batch_converter_code}}
+      workspace/ui.py: |
+        {{ui_code}}
+      workspace/main.py: |
+        {{main_code}}
+
+  - name: "Add Documentation & Requirements"
+    files:
+      workspace/README.md: |
+        {{readme_code}}
+      workspace/ONBOARDING.md: |
+        {{onboarding_code}}
+      workspace/requirements.txt: |
+        {{requirements_code}}
+
+  - name: "Style & Static Checks"
+    run: |
+      pip install flake8 mypy
+      flake8 workspace/ || echo "⚠️ Style warnings detected"
+      mypy workspace/ || echo "⚠️ Typing issues detected"
+
+  - name: "Package Repo"
+    files:
+      create_zip.py: |
+        import os, zipfile
+        FOLDER = "workspace"
+        OUTPUT = "workspace_cleaned.zip"
+        with zipfile.ZipFile(OUTPUT, 'w', zipfile.ZIP_DEFLATED) as zipf:
+            for root, _, files in os.walk(FOLDER):
+                for file in files:
+                    filepath = os.path.join(root, file)
+                    arcname = os.path.relpath(filepath, FOLDER)
+                    zipf.write(filepath, arcname)
+        print(f"Created {OUTPUT}")
+    run: |
+      python create_zip.py
+
+  - name: "Completion Notice"
+    run: echo "✅ Repo hardened and zipped as workspace_cleaned.zip"

@@ -22,3 +22,5 @@ workspace/_archive/
 
 # VS Code dev containers or auto-generated stuff
 .devcontainer/
+
+credentials.json
