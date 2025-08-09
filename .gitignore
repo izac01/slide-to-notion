@@ -24,3 +24,11 @@ workspace/_archive/
 .devcontainer/
 
 credentials.json
+# keep these out of this repo
+textgen/
+text-generation-webui/
+workspace/**
+!workspace/slides.json
+!workspace/drive_uploader.py
+!workspace/google_slides_to_notion
+!workspace/game_2048/.gitkeep
