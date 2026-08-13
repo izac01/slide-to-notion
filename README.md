@@ -1,6 +1,10 @@
 # Google Slides to Notion Converter
 
+Converts slides into Notion pages: one page per slide, with the slide title as a
+heading followed by its text and image blocks.
+
 ## Setup
+
 1. Install requirements:
    ```bash
    pip install -r requirements.txt
@@ -8,17 +12,59 @@
 
 2. Place `credentials.json` (Google API OAuth credentials) in the same folder.
 
-3. Run the script:
+3. Configure Notion via environment variables:
    ```bash
-   python google_slides_to_notion.py
+   export NOTION_API_KEY=secret_...
+   export NOTION_DATABASE_ID=...
    ```
 
-4. On first run, a browser will open to authorize Google Slides access.
+## Run
 
-5. Ensure your Notion API token is set in the script.
+```bash
+python main.py --slides workspace/slides.json --limit 3
+```
+
+| Flag | Default | Meaning |
+| --- | --- | --- |
+| `--slides` | `workspace/slides.json` | path to the slides JSON |
+| `--database-id` | `$NOTION_DATABASE_ID` | target Notion database |
+| `--limit` | `3` | how many slides to convert |
+
+With no `NOTION_API_KEY` set, the run is offline: it prints the Notion payload it
+*would* POST and returns a stub page instead of uploading. This is the default
+way to inspect output without touching a real workspace.
+
+## Slides JSON format
+
+`slides/slides_fetcher.py` writes this shape:
+
+```json
+{
+  "deck_id": "optional-deck-id",
+  "slides": [
+    {
+      "title": "DEMO SLIDE",
+      "elements": [
+        { "type": "text",  "content": "some text" },
+        { "type": "image", "url": "https://example.com/a.png" }
+      ]
+    }
+  ]
+}
+```
+
+Text elements may use either `content` or `text`. Elements without an explicit
+`type` are inferred from their keys. Slides with no title fall back to
+`"<deck_id> - Slide <n>"`.
+
+## Tests
+
+```bash
+pip install pytest
+python -m pytest
+```
 
 ## Notes
-- Updates only when deck changes.
-- Syncs slides with thumbnails, text, and formatting to Notion.
-- Optimized for visual 1:1 parity.
 
+- Element order is preserved when mapping a slide to Notion blocks.
+- Images are linked as external URLs; uploading them to Notion is not done yet.
