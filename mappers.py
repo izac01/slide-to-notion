@@ -21,6 +21,15 @@ def image_block_external(url: str):
     # For MVP use external URL; later we’ll upload and switch to "file"
     return {"type": "image", "image": {"type": "external", "external": {"url": url}}}
 
+def element_text(el: dict) -> str:
+    """Text elements are written as "content" by slides_fetcher, but earlier
+    hand-made fixtures use "text". Accept either so neither shape drops."""
+    for key in ("content", "text"):
+        val = el.get(key)
+        if isinstance(val, str) and val.strip():
+            return val.strip()
+    return ""
+
 def google_slide_to_blocks(slide: dict) -> list[dict]:
     """Very dumb mapper: first text element becomes heading; rest paragraphs; images added in order."""
     blocks: list[dict] = []
@@ -28,11 +37,11 @@ def google_slide_to_blocks(slide: dict) -> list[dict]:
     if title:
         blocks.append(heading_block(title))
 
-    # Elements can be {"type":"text","text":"..."} or {"type":"image","url": "..."} for MVP
+    # Elements can be {"type":"text","content":"..."} or {"type":"image","url": "..."} for MVP
     for el in slide.get("elements", []):
-        t = el.get("type") or ("text" if "text" in el else "image" if "url" in el else None)
+        t = el.get("type") or ("image" if "url" in el else "text" if element_text(el) else None)
         if t == "text":
-            txt = el.get("text", "").strip()
+            txt = element_text(el)
             if txt:
                 blocks.append(paragraph_block(txt))
         elif t == "image":
